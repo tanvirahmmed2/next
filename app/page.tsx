@@ -1,11 +1,12 @@
 import React from 'react'
 
-function Page() {
+
+function Home() {
   return (
-    <div>
-      <p className='w-full text-center'>First next App</p>
-    </div>
+    <main>
+      <h1>Hello world</h1>
+    </main>
   )
 }
 
-export default Page
+export default Home
