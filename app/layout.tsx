@@ -1,4 +1,6 @@
 
+import About from "./about/page";
+import Footer from "./footer/page";
 import "./globals.css";
 
 
@@ -19,6 +21,9 @@ export default function RootLayout({
         
       >
         {children}
+        <About/>
+        <Footer/>
+        
       </body>
     </html>
   );
