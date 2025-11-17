@@ -2,6 +2,7 @@
 import About from "./about/page";
 import Footer from "./footer/page";
 import "./globals.css";
+import Navbar from "./navbar/page";
 
 
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body
         
       >
+        <Navbar/>
         {children}
         <About/>
         <Footer/>
