@@ -16,7 +16,7 @@ const NewUser = () => {
   if(user=== null) return <p>No data found</p>
   return (
     <div>
-      Hello new user {user.name}
+      Hello  {user.name}
     </div>
   )
 }
