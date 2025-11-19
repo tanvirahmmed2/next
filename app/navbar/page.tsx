@@ -6,7 +6,7 @@ const Navbar = () => {
     <div className='w-full flex flex-row items-center justify-between p-2 bg-black text-white'>
       <Link href='/'>Next</Link>
       <div>
-        <Link href='/users'>Users</Link>
+        <h1>Hey</h1>
       </div>
       
     </div>
