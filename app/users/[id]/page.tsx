@@ -1,35 +1,28 @@
-'use client'
-import { useParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import React from 'react'
 
 interface User {
-  id: number
-  name: string
+  id: number,
+  name: string,
 }
 
-const NewUser = () => {
-  const [user, setUser] = useState<User | null>(null)
-  const { id } = useParams()
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, { 
-        cache: 'no-store' 
-      })
-      const data: User = await res.json()
-      setUser(data)
-    }
-
-    fetchUser()
-  }, [id])
-
-  if (user === null) return <p>No data found</p>
-
+const UserPage = async () => {
+  
+  const res = await fetch('https://jsonplaceholder.typicode.com/users', { cache: 'no-store' })
+  const user: User[] = await res.json()
   return (
     <div>
-      Hello {user.name}
+      This is a users page
+      <p>{new Date().toLocaleTimeString()}</p>
+      {user.map((e) => {
+        return (
+          <div key={e.id}>
+            <Link href={`/user/${e.id}`}>{e.name}</Link>
+          </div>
+        )
+      })}
     </div>
   )
 }
 
-export default NewUser
+export default UserPage
