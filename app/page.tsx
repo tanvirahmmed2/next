@@ -1,5 +1,27 @@
+import EventCard from "@/components/elements/EventCard"
 import ExploreBtn from "@/components/elements/ExploreBtn"
 
+const events=[
+  { 
+    id:1,
+    image: '/images/event1.png',
+    title: "Event 1",
+    slug: 'event-1',
+    location:'location-1',
+    date: 'Date-1',
+    time: 'Time-1'
+  },
+  { 
+    id:2,
+    image: '/images/event2.png',
+    title: "Event 2",
+    slug: 'event-2',
+    location:'location-2',
+    date: 'Date-2',
+    time: 'Time-2'
+  },
+  
+]
 
 
 function Home() {
@@ -10,8 +32,10 @@ function Home() {
       <p className="text-lg ">Hackathon, Meetups and Conferences. All in one</p>
       <ExploreBtn/>
       <div className="mt-6 space-y-7">
-        {[1,2,3,4].map((event)=>(
-          <p key={event}>Event {event}</p>
+        {events.map((event)=>(
+          <div key={event.id}>
+            <EventCard {...event}/>
+          </div>
         ))}
 
       </div>
