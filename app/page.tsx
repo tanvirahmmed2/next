@@ -1,6 +1,6 @@
 
 import React from 'react'
-import ExploreBtn from '../components/ExploreBtn'
+import ExploreBtn from '../components/elements/ExploreBtn'
 
 
 function Home() {
