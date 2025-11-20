@@ -11,9 +11,9 @@ function Home() {
       <h1 className="text-6xl font-semibold text-center">Event You Can not Miss</h1>
       <p className="text-lg ">Hackathon, Meetups and Conferences. All in one</p>
       <ExploreBtn/>
-      <div className="mt-6 space-y-7">
+      <div className="mt-6 space-y-7 flex flex-wrap gap-4">
         {events.map((event)=>(
-          <div key={event.id}>
+          <div key={event.title}>
             <EventCard {...event}/>
           </div>
         ))}
