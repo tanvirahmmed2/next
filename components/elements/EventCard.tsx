@@ -11,11 +11,16 @@ interface Props{
 }
 
 
-const EventCard = ({title,image,slug}: Props) => {
+const EventCard = ({title,image,slug, location, date, time}: Props) => {
   return (
     <Link href={`/events/${slug}`} >
         <Image src={image} alt={title} width={320} height={120}/>
         <p>{title}</p>
+        <div>
+            <p>Location: {location}</p>
+            <p>Date: {date}</p>
+            <p>Time: {time}</p>
+        </div>
     </Link>
   )
 }
