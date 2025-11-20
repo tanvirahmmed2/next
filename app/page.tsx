@@ -1,27 +1,7 @@
 import EventCard from "@/components/elements/EventCard"
 import ExploreBtn from "@/components/elements/ExploreBtn"
+import { events } from "@/lib/data"
 
-const events=[
-  { 
-    id:1,
-    image: '/images/event1.png',
-    title: "Event 1",
-    slug: 'event-1',
-    location:'location-1',
-    date: 'Date-1',
-    time: 'Time-1'
-  },
-  { 
-    id:2,
-    image: '/images/event2.png',
-    title: "Event 2",
-    slug: 'event-2',
-    location:'location-2',
-    date: 'Date-2',
-    time: 'Time-2'
-  },
-  
-]
 
 
 function Home() {
