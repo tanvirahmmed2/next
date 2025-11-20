@@ -3,7 +3,7 @@ import React from 'react'
 
 const ExploreBtn = () => {
   return (
-    <button>Explore More</button>
+    <button type='button' onClick={()=> alert('Hey')}>Explore More</button>
   )
 }
 
