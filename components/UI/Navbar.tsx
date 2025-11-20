@@ -11,7 +11,7 @@ const Navbar = () => {
         <div className="flex flex-row items-center justify-center gap-4">
           <Link href="/">Home</Link>
           <Link href="/events">Events</Link>
-          <Link href="/createevents">Create Events</Link>
+          <Link href="/create-events">Create Events</Link>
         </div>
       </nav>
     </header>

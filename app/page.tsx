@@ -1,16 +1,18 @@
+import ExploreBtn from "@/components/elements/ExploreBtn"
 
-import React from 'react'
-import ExploreBtn from '../components/elements/ExploreBtn'
 
 
 function Home() {
   return (
-    <main>
-      <div>
-        <h1>The Hub for Every Dev Event You Can't Miss</h1>
+    <section className="w-full flex flex-col items-center justify-center gap-2 py-12">
+      <h1 className="text-6xl font-semibold text-center">The Hub for Every Dev</h1>
+      <h1 className="text-6xl font-semibold text-center">Event You Can not Miss</h1>
+      <p className="text-lg ">Hackathon, Meetups and Conferences. All in one</p>
       <ExploreBtn/>
+      <div>
+
       </div>
-    </main>
+    </section>
   )
 }
 
