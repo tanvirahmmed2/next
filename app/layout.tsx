@@ -1,5 +1,7 @@
 
+import Navbar from "@/components/UI/Navbar";
 import "./globals.css";
+import Footer from "@/components/UI/Footer";
 
 
 
@@ -16,10 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        
+        className="w-full overflow-x-hidden"
       >
+        <Navbar />
         {children}
-        
+        <Footer />
       </body>
     </html>
   );
