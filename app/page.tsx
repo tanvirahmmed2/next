@@ -13,6 +13,7 @@ function Home() {
       <p className="text-lg ">Hackathon, Meetups and Conferences. All in one</p>
       <ExploreBtn/>
       </div>
+      
       <div className="mt-6 space-y-7 flex flex-wrap gap-4 p-4 justify-center">
         {events.map((event)=>(
           <div key={event.title}>
