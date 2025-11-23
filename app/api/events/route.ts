@@ -1,22 +1,27 @@
+import { Event } from "@/database";
 import { connectToDatabase } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req:NextRequest) {
+export async function POST(req: NextRequest) {
     try {
         await connectToDatabase()
 
-        const formData= await req.formData()
+        const formData = await req.formData()
 
-        let event,
+        let event;
         try {
-            event= Object.fromEntries(formData.entries())
+            event = Object.fromEntries(formData.entries())
 
         } catch (e) {
-            return NextResponse.json({message: 'Invalid JSON data format'}, {status: 400})
+            return NextResponse.json({ message: 'Invalid JSON data format', e }, { status: 400 })
         }
+
+        const createdEvent = await Event.create(event)
+
+        return NextResponse.json({ message: 'Event Created Successfully', event: createdEvent }, { status: 201 })
     } catch (e) {
         console.log(e)
-        return NextResponse.json({message: "Event  creation failed",  error: e instanceof Error? e.message: "unknown"}, {status: 500})
-        
+        return NextResponse.json({ message: "Event  creation failed", error: e instanceof Error ? e.message : "unknown" }, { status: 500 })
+
     }
 }
