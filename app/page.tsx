@@ -1,5 +1,6 @@
 import EventCard from "@/components/elements/EventCard"
 import ExploreBtn from "@/components/elements/ExploreBtn"
+import { IEvent } from "@/database"
 
 const BASE_URL=process.env.NEXT_PUBLIC_BASE_URl
 
@@ -20,7 +21,7 @@ async function Home() {
       </div>
       
       <div className="mt-6 space-y-7 flex flex-wrap gap-4 p-4 justify-center">
-        {events.map((event)=>(
+        {events && events.length >0  && events.map((event:IEvent)=>(
           <div key={event.title}>
             <EventCard {...event}/>
           </div>
