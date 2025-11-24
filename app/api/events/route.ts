@@ -2,16 +2,54 @@ import { Event, type IEvent } from "@/database";
 import { connectToDatabase } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
-
+// Fields the client is allowed to send when creating an event.
 type EventInput = Omit<IEvent, "slug" | "createdAt" | "updatedAt">;
+
+// Parse request body as JSON or form-data, depending on Content-Type.
+async function parseEventBody(req: NextRequest): Promise<Partial<EventInput>> {
+  const contentType = req.headers.get("content-type") || "";
+
+  // JSON body (recommended)
+  if (contentType.includes("application/json")) {
+    return (await req.json()) as Partial<EventInput>;
+  }
+
+  // Fallback: support form-data / urlencoded bodies (e.g. from HTML forms)
+  if (
+    contentType.includes("multipart/form-data") ||
+    contentType.includes("application/x-www-form-urlencoded")
+  ) {
+    const formData = await req.formData();
+    const obj = Object.fromEntries(formData.entries()) as Record<string, FormDataEntryValue>;
+
+    const result: Partial<EventInput> = {};
+    for (const [key, value] of Object.entries(obj)) {
+      if (typeof value === "string") {
+        // store raw string; arrays are normalized later
+        (result as Record<string, unknown>)[key] = value;
+      }
+    }
+    return result;
+  }
+
+  // Unsupported content type
+  throw new Error("Unsupported Content-Type. Use application/json or form-data.");
+}
 
 export async function POST(req: NextRequest) {
   try {
     await connectToDatabase();
 
-    const body = (await req.json()) as Partial<EventInput>;
+    let body: Partial<EventInput>;
+    try {
+      body = await parseEventBody(req);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Invalid request body";
+      return NextResponse.json({ message }, { status: 400 });
+    }
 
-    
+    // Basic required-field validation.
     const requiredStringFields: (keyof EventInput)[] = [
       "title",
       "description",
