@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const file= formData.get('image') as File
 
     if(!file){
-      return NextResponse.json({message: "Image not found"}, {status:401})
+      return NextResponse.json({message: "Image file is required"}, {status:401})
     }
 
     const createdEvent = await Event.create(event)
