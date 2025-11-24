@@ -1,10 +1,15 @@
 import EventCard from "@/components/elements/EventCard"
 import ExploreBtn from "@/components/elements/ExploreBtn"
-import { events } from "@/lib/data"
+
+const BASE_URL=process.env.NEXT_PUBLIC_BASE_URl
 
 
 
-function Home() {
+async function Home() {
+
+  const response= await fetch(`${BASE_URL}/api/events`)
+  const {events}= await response.json()
+
   return (
     <section className="w-full flex flex-col items-center justify-center gap-2 py-12">
       <div className="w-full flex flex-col items-center justify-center gap-2 min-h-[80vh]">
