@@ -138,7 +138,7 @@ const eventSchema = new Schema<EventDocument>(
 );
 
 // Generate slug and normalize date/time before saving.
-eventSchema.pre<EventDocument>("save", function () {
+eventSchema.pre<EventDocument>("save", function (next) {
   if (this.isModified("title") || !this.slug) {
     const baseSlug = slugify(this.title);
     this.slug = baseSlug || `event-${this._id.toString()}`;
@@ -147,7 +147,7 @@ eventSchema.pre<EventDocument>("save", function () {
   if (this.isModified("date")) {
     const parsed = new Date(this.date);
     if (Number.isNaN(parsed.getTime())) {
-      throw new Error("Invalid date format");
+      return next(new Error("Invalid date format"));
     }
     this.date = parsed.toISOString().slice(0, 10);
   }
@@ -155,10 +155,12 @@ eventSchema.pre<EventDocument>("save", function () {
   if (this.isModified("time")) {
     const normalized = normalizeTime(this.time);
     if (!normalized) {
-      throw new Error("Invalid time format; expected HH:MM");
+      return next(new Error("Invalid time format; expected HH:MM"));
     }
     this.time = normalized;
   }
+
+  next();
 });
 
 export const Event: Model<EventDocument> =
