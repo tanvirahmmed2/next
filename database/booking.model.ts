@@ -46,19 +46,14 @@ const bookingSchema = new Schema<BookingDocument>(
 );
 
 // Make sure the referenced event exists before saving.
-bookingSchema.pre<BookingDocument>("save", async function (next) {
+bookingSchema.pre<BookingDocument>("save", async function () {
   if (!this.isModified("eventId")) {
-    return next();
+    return;
   }
 
-  try {
-    const eventExists = await Event.exists({ _id: this.eventId });
-    if (!eventExists) {
-      return next(new Error("Cannot create booking: event does not exist"));
-    }
-    return next();
-  } catch (error) {
-    return next(error as Error);
+  const eventExists = await Event.exists({ _id: this.eventId });
+  if (!eventExists) {
+    throw new Error("Cannot create booking: event does not exist");
   }
 });
 
