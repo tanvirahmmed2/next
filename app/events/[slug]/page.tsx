@@ -2,6 +2,7 @@ import Image from "next/image";
 import pin from '@/public/icons/pin.svg'
 import calender from '@/public/icons/calendar.svg'
 import clock from '@/public/icons/clock.svg'
+import BookEvent from "@/components/elements/BookEvent";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 
@@ -21,6 +22,8 @@ async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const result = await response.json();
 
   const event = result.event || result.data;
+
+  const booking=10
 
   return (
     <div className="w-full flex flex-col md:flex-row gap-4  py-10 px-4">
@@ -59,8 +62,16 @@ async function Page({ params }: { params: Promise<{ slug: string }> }) {
       </div>
 
       <div className="w-full flex items-center flex-col">
-        <div>
-
+        <div className="flex flex-col gap-4">
+          <h1 className="text-3xl font-semibold">Book Event</h1>
+          {
+            booking >0? (
+              <p className="text-sm">Join {booking} people who have already booked their spot!</p>
+            ): (
+              <p className="text-sm">Be the first to book spot</p>
+            )
+          }
+          <BookEvent/>
         </div>
 
       </div>
