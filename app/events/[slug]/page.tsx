@@ -23,8 +23,8 @@ async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const event = result.event || result.data;
 
   return (
-    <div className="w-full flex flex-row gap-4  py-10 px-4">
-      <div className="w-3/4 flex-col flex  gap-4">
+    <div className="w-full flex flex-col md:flex-row gap-4  py-10 px-4">
+      <div className="w-full flex-col flex  gap-4">
         <h1 className="text-2xl font-semibold">{event.title}</h1>
         <Image src={event.image} alt={event.title} width={800} height={200} />
         <p>{event.description}</p>
@@ -58,8 +58,10 @@ async function Page({ params }: { params: Promise<{ slug: string }> }) {
         </div>
       </div>
 
-      <div className=" flex items-center flex-col">
-        <h1 className="w-full text-lg font-semibold">Book event</h1>
+      <div className="w-full flex items-center flex-col">
+        <div>
+
+        </div>
 
       </div>
     </div>
