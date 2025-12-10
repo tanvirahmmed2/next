@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const metadata={
-    title: 'Next',
+    title:'Next',
     description:'Next home page'
 }
 
