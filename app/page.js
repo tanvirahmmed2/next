@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Home = () => {
+const Page = async() => {
   return (
     <div>
-      New app
+      
     </div>
   )
 }
 
-export default Home
+export default Page
