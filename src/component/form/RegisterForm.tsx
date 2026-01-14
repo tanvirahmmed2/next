@@ -19,7 +19,7 @@ const RegisterForm = () => {
         try {
             const response= await axios.post('/api/user/', formData, {withCredentials:true})
             console.log(response)
-            window.location.replace('/profile')
+            window.location.replace('/login')
         } catch (error:any) {
             console.log(error)
             alert(error?.response?.data?.message)
@@ -37,7 +37,7 @@ const RegisterForm = () => {
                 <input type="email" required name='email' id='email' value={formData.email} onChange={changeHandler} className='w-full px-3 p-1 border outline-none rounded-lg' />
             </div>
             <div className='w-full flex flex-col gap-1'>
-                <label htmlFor="password">Email</label>
+                <label htmlFor="password">Pasword</label>
                 <input type="password" required name='password' id='password' value={formData.password} onChange={changeHandler} className='w-full px-3 p-1 border outline-none rounded-lg' />
             </div>
             <button type='submit' className='bg-sky-400 px-3 text-white rounded-lg cursor-pointer hover:bg-sky-500'>Register</button>

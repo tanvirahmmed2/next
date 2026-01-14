@@ -12,3 +12,10 @@ export const JWT_SECRET: string = (() => {
   }
   return process.env.JWT;
 })();
+
+export const BASE_URL: string = (() => {
+  if (!process.env.BASE_URL) {
+    throw new Error(" BASE_URL is not defined");
+  }
+  return process.env.BASE_URL;
+})();
