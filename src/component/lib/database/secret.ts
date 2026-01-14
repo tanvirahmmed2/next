@@ -4,3 +4,11 @@ export const MONGO_URL: string = (() => {
   }
   return process.env.MONGO_URL;
 })();
+
+
+export const JWT_SECRET: string = (() => {
+  if (!process.env.JWT) {
+    throw new Error(" JWT secret is not defined");
+  }
+  return process.env.JWT;
+})();

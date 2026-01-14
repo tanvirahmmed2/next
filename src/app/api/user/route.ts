@@ -1,11 +1,42 @@
+import { connectDB } from "@/component/lib/database/db";
+import User from "@/component/lib/model/user";
 import { NextResponse } from "next/server";
-
+import bcrypt from 'bcryptjs'
 
 
 
 export async function POST(req:Request) {
     try {
+        await connectDB()
+
+        const {name, email, password}= await req.json()
+
+        if(!name || !email || !password){
+            return NextResponse.json({
+                success: false, message:'Please fill all information'
+            }, {status:400})
+        }
+
+        const user= await User.findOne({email})
+
+        if(user){
+            return NextResponse.json({
+                success: false, message:'User already exists'
+            }, {status:400})
+        }
         
+        const hasehdPass= await bcrypt.hash(password, 10)
+
+        const newUser= new User({
+            name, email, password: hasehdPass
+        })
+
+        await newUser.save()
+
+        return NextResponse.json({
+            success: true, message:'Successfully registered'
+        }, {status:200})
+
     } catch (error: any) {
         return NextResponse.json({
             success: false, message: error.message
