@@ -42,3 +42,50 @@ export async function POST(req: Request) {
 }
 
 
+export async function GET(req: Request) {
+  try {
+    await connectDB()
+    const auth = await isLogin()
+    if (!auth.success) {
+      return NextResponse.json({
+        success: false, message: auth.message
+      }, { status: 400 })
+    }
+
+    const url = new URL(req.url)
+    const chatId = url.searchParams.get('chatId')
+
+    if (!chatId) {
+      return NextResponse.json({
+        success: false, message: 'Chat id not found'
+      }, { status: 400 })
+    }
+
+    const chat = await Chat.findById(chatId)
+    if (!chat || !chat.members.includes(auth.payload._id)) {
+      return NextResponse.json({ success: false, message: "Unauthorized chat access" }, { status: 403 });
+    }
+
+
+    const messages = await Message.find({ chatId })
+    if (!messages) {
+      return NextResponse.json({
+        success: false, message: 'no message found'
+      }, { status: 400 })
+
+
+    }
+    return NextResponse.json({
+      success: true, message: 'Successfully found messages', payload: messages
+    }, { status: 200 })
+
+    
+  } catch (error: any) {
+    return NextResponse.json({
+      success: false, message: error.message
+    }, { status: 500 })
+
+
+  }
+
+}
