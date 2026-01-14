@@ -46,3 +46,34 @@ export async function POST(req: Request) {
     }
 
 }
+
+
+export async function GET() {
+    try {
+        await connectDB()
+        const auth= await isLogin()
+        if(!auth.success){
+            return NextResponse.json({
+                success:false, message:auth.message
+            },{status:400})
+        }
+
+        const chats= await Chat.find({members: auth.payload._id}).sort({createdAt:-1})
+
+        if(!chats){
+            return NextResponse.json({
+                success:false, message:'No chat found'
+            },{status:400})
+        }
+        return NextResponse.json({
+            success:true, message:'Successfully found chat data', payload: chats
+        },{status:200})
+
+    } catch (error: any) {
+        return NextResponse.json({
+            success:false, message: error.message
+        },{status:500})
+        
+    }
+    
+}
