@@ -1,23 +1,38 @@
-import { model, models, Schema } from "mongoose"
-
-
+import mongoose, { Schema, model, models } from "mongoose";
 
 export interface IMessage {
-    senderId: string,
-    chatId: string,
-    message: string
-    createdAt: Date
+  _id?: mongoose.Types.ObjectId;
+  chatId: mongoose.Types.ObjectId;
+  senderId: mongoose.Types.ObjectId;
+  text: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
+const messageSchema = new Schema<IMessage>(
+  {
+    text: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    senderId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    chatId: {
+      type: Schema.Types.ObjectId,
+      ref: "Chat",
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const messageSchema = new Schema<IMessage>({
-    message: { type: String, required: true, trim: true },
-    senderId: { type: String, required: true, trim: true },
-    chatId: { type: String, required: true, trim: true },
-    createdAt: { type: Date, default: Date.now }
-})
+const Message =
+  models.Message || model<IMessage>("Message", messageSchema);
 
-
-const Message= models.messages || model('messages', messageSchema)
-
-export default Message
+export default Message;
