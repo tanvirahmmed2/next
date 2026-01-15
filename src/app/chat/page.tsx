@@ -52,38 +52,44 @@ const Chat = () => {
     fetchChat()
   }, [])
 
+  const createChat = async (otherUserId: string) => {
+    console.log(otherUserId)
+  }
+
   return (
-    <div className="max-w-xl mx-auto p-4">
-      
+    <div className="w-full p-4 flex flex-col items-center justify-center gap-4">
+
       {
-        users!== null && <div>
+        users !== null && <div className="w-full flex flex-row items-center justify-center gap-2 ">
           {
-            users.map((user)=>(
-              <div key={user._id}>
-                <p><IoIosPersonAdd/></p>
+            users.map((user) => (
+              <div key={user._id} className="w-auto flex flex-col items-center justify-center p-2 border border-black/10 rounded-lg shadow">
+                <button onClick={() => createChat(user._id)} className="text-4xl"><IoIosPersonAdd /></button>
                 <p>{user.name}</p>
-                <button >Add</button>
               </div>
             ))
           }
         </div>
       }
-      
-      
-      
-      
-      
-      <h1 className="text-2xl font-bold mb-4">Chats</h1>
 
-      {chats.map(chat => (
-        <Link
-          key={chat._id}
-          href={`/chat/${chat._id}`}
-          className="block p-3 border rounded mb-2 hover:bg-gray-100"
-        >
-          Chat ID: {chat._id.slice(-6)}
-        </Link>
-      ))}
+
+
+
+
+      {
+        chats !== null && <div>
+          {chats.map(chat => (
+            <Link
+              key={chat._id}
+              href={`/chat/${chat._id}`}
+              className="block p-3 border rounded mb-2 hover:bg-gray-100"
+            >
+              Chat ID: {chat._id.slice(-6)}
+            </Link>
+          ))}
+        </div>
+      }
+
     </div>
   );
 }

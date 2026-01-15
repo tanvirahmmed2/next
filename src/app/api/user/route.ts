@@ -2,6 +2,7 @@ import { connectDB } from "@/component/lib/database/db";
 import User from "@/component/lib/model/user";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcryptjs'
+import { isLogin } from "@/component/lib/middleware";
 
 
 
@@ -57,8 +58,15 @@ export async function GET() {
     try {
         await connectDB()
 
+        const auth= await isLogin()
+        if(!auth.success){
+            return NextResponse.json({
+                success:false, message: auth.message
+            },{status:400})
+        }
+
         const users = await User
-            .find({})
+            .find({ _id: { $ne: auth.payload._id } })
             .sort({ createdAt: -1 })
             .select("-password");
         if (!users || users.length < 1) {
