@@ -14,7 +14,7 @@ const ChatLayout = async ({children}: Readonly<{children: React.ReactNode}>) => 
         return redirect('/login')
     }
     return (
-        <div>
+        <div className='w-full'>
             {children}
         </div>
     )

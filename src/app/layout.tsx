@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/component/bar/Navbar";
 import Footer from "@/component/bar/Footer";
+import ContextProvider from "@/component/helper/Context";
 
 
 
@@ -18,11 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` antialiased flex flex-col items-center justify-between`}
+        className={` antialiased w-full flex flex-col items-center justify-between`}
       >
-        <Navbar/>
-        {children}
-        <Footer/>
+        <ContextProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </ContextProvider>
       </body>
     </html>
   );

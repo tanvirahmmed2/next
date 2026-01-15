@@ -1,6 +1,7 @@
 import { connectDB } from "@/component/lib/database/db";
 import { isLogin } from "@/component/lib/middleware";
 import Chat from "@/component/lib/model/chat";
+import User from "@/component/lib/model/user";
 import { NextResponse } from "next/server";
 
 
@@ -24,19 +25,32 @@ export async function POST(req: Request) {
             }, { status: 400 })
         }
 
+        const otherUser= await User.findById(otherUserId)
+        if(!otherUser){
+            return NextResponse.json({
+                success:false, message:'Friends data not found'
+            },{status:400})
+        }
+
+        
+
         let chat = await Chat.findOne({
             isGroup: false,
             members: { $all: [userId, otherUserId] },
         });
 
-        if (!chat) {
-            chat = await Chat.create({
-                members: [userId, otherUserId],
-                isGroup: false,
-            });
+        if (chat) {
+            return NextResponse.json({
+                success: false, message: 'Already added to chatlist'
+            }, { status: 400 })
         }
+        chat = await Chat.create({
+            members: [userId, otherUser._id],
+            title:otherUser.name,
+            isGroup: false,
+        });
 
-        return NextResponse.json({ success: true, chat });
+        return NextResponse.json({ success: true, message: 'Successfully created chat', payload: chat });
 
     } catch (error: any) {
         return NextResponse.json({
@@ -51,29 +65,29 @@ export async function POST(req: Request) {
 export async function GET() {
     try {
         await connectDB()
-        const auth= await isLogin()
-        if(!auth.success){
+        const auth = await isLogin()
+        if (!auth.success) {
             return NextResponse.json({
-                success:false, message:auth.message
-            },{status:400})
+                success: false, message: auth.message
+            }, { status: 400 })
         }
 
-        const chats= await Chat.find({members: auth.payload._id}).sort({createdAt:-1})
+        const chats = await Chat.find({ members: auth.payload._id }).sort({ createdAt: -1 })
 
-        if(!chats){
+        if (!chats) {
             return NextResponse.json({
-                success:false, message:'No chat found'
-            },{status:400})
+                success: false, message: 'No chat found'
+            }, { status: 400 })
         }
         return NextResponse.json({
-            success:true, message:'Successfully found chat data', payload: chats
-        },{status:200})
+            success: true, message: 'Successfully found chat data', payload: chats
+        }, { status: 200 })
 
     } catch (error: any) {
         return NextResponse.json({
-            success:false, message: error.message
-        },{status:500})
-        
+            success: false, message: error.message
+        }, { status: 500 })
+
     }
-    
+
 }
