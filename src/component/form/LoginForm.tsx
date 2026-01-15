@@ -18,7 +18,7 @@ const LoginForm = () => {
         try {
             const response= await axios.post('/api/user/login', formData, {withCredentials:true})
             console.log(response)
-            window.location.replace('/profile')
+            window.location.replace('/chat')
         } catch (error:any) {
             console.log(error)
             alert(error?.response?.data?.message)
